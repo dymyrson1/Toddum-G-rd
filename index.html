@@ -142,7 +142,7 @@
     const result = document.getElementById('result');
 
     if (!startValue) {
-      result.textContent = 'Оберіть дату.';
+      result.textContent = 'Velg dato først.';
       return;
     }
 
@@ -155,7 +155,7 @@
     result.innerHTML =
       '<strong>Produkt:</strong> ' + productName + '<br>' +
       '<strong>Startdato:</strong> ' + formatDate(startDate) + '<br>' +
-      '<strong>Holdbarhet:</strong> ' + label + ' (' + days + ' днів)<br>' +
+      '<strong>Holdbarhet:</strong> ' + label + ' (' + days + ' dager)<br>' +
       '<strong>Batchnummer:</strong> ' + batchNumber + '<br>' +
       '<strong>Siste forbruksdato:</strong> ' + formatDate(endDate);
   }
