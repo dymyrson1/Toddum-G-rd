@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор дати та партії</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 0 15px;
+      background: #f5f5f5;
+      color: #222;
+    }
+
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin-top: 14px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    select, input, button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background: black;
+      color: white;
+      border: none;
+      margin-top: 12px;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #eef3ff;
+      border-radius: 10px;
+      line-height: 1.6;
+    }
+
+    .small {
+      margin-top: 8px;
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Калькулятор дати та партії</h2>
+
+  <label for="product">Продукт:</label>
+  <select id="product">
+    <option value="16" data-label="2 uker og 2 dager">Burrata</option>
+    <option value="24" data-label="3 uker og 3 dager">Revet</option>
+    <option value="24" data-label="3 uker og 3 dager">Stracciatella</option>
+    <option value="24" data-label="3 uker og 3 dager">Mozzarella 125 gram</option>
+    <option value="24" data-label="3 uker og 3 dager">Mozzarella 10 gram</option>
+  </select>
+
+  <div class="small" id="durationInfo"></div>
+
+  <label for="startDate">Дата відліку:</label>
+  <input type="date" id="startDate">
+
+  <button type="button" id="todayBtn">Сьогодні</button>
+  <button type="button" id="calculateBtn">Розрахувати</button>
+
+  <div class="result" id="result">
+    Обери параметри і натисни «Розрахувати».
+  </div>
+</div>
+
+<script>
+  function formatDate(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return day + '.' + month + '.' + year;
+  }
+
+  function formatInputDate(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return year + '-' + month + '-' + day;
+  }
+
+  function setToday() {
+    const today = new Date();
+    document.getElementById('startDate').value = formatInputDate(today);
+  }
+
+  function calculateBatchNumber() {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = String(today.getFullYear());
+
+    const numericDate = parseInt(day + month + year, 10);
+    return numericDate * 2;
+  }
+
+  function updateDurationInfo() {
+    const select = document.getElementById('product');
+    const option = select.options[select.selectedIndex];
+    const days = option.value;
+    const label = option.getAttribute('data-label');
+
+    document.getElementById('durationInfo').textContent =
+      'Тривалість: ' + label + ' (' + days + ' днів)';
+  }
+
+  function calculate() {
+    const select = document.getElementById('product');
+    const option = select.options[select.selectedIndex];
+
+    const days = parseInt(option.value, 10);
+    const label = option.getAttribute('data-label');
+    const productName = option.textContent;
+    const startValue = document.getElementById('startDate').value;
+    const result = document.getElementById('result');
+
+    if (!startValue) {
+      result.textContent = 'Оберіть дату.';
+      return;
+    }
+
+    const startDate = new Date(startValue + 'T00:00:00');
+    const endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + days);
+
+    const batchNumber = calculateBatchNumber();
+
+    result.innerHTML =
+      '<strong>Продукт:</strong> ' + productName + '<br>' +
+      '<strong>Дата відліку:</strong> ' + formatDate(startDate) + '<br>' +
+      '<strong>Термін:</strong> ' + label + ' (' + days + ' днів)<br>' +
+      '<strong>Номер партії:</strong> ' + batchNumber + '<br>' +
+      '<strong>Кінцева дата споживання:</strong> ' + formatDate(endDate);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('todayBtn').addEventListener('click', setToday);
+    document.getElementById('calculateBtn').addEventListener('click', calculate);
+    document.getElementById('product').addEventListener('change', updateDurationInfo);
+
+    setToday();
+    updateDurationInfo();
+  });
+</script>
+
+</body>
+</html>
