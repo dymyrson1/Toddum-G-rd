@@ -69,7 +69,7 @@
 <div class="box">
   <h2>Калькулятор дати та партії</h2>
 
-  <label for="product">Продукт:</label>
+  <label for="product">Produkt:</label>
   <select id="product">
     <option value="16" data-label="2 uker og 2 dager">Burrata</option>
     <option value="24" data-label="3 uker og 3 dager">Revet</option>
@@ -80,14 +80,14 @@
 
   <div class="small" id="durationInfo"></div>
 
-  <label for="startDate">Дата відліку:</label>
+  <label for="startDate">Startdato:</label>
   <input type="date" id="startDate">
 
-  <button type="button" id="todayBtn">Сьогодні</button>
-  <button type="button" id="calculateBtn">Розрахувати</button>
+  <button type="button" id="todayBtn">I dag</button>
+  <button type="button" id="calculateBtn">Beregn</button>
 
   <div class="result" id="result">
-    Обери параметри і натисни «Розрахувати».
+    Velg parametere og trykk «Beregn».
   </div>
 </div>
 
@@ -153,11 +153,11 @@
     const batchNumber = calculateBatchNumber();
 
     result.innerHTML =
-      '<strong>Продукт:</strong> ' + productName + '<br>' +
-      '<strong>Дата відліку:</strong> ' + formatDate(startDate) + '<br>' +
-      '<strong>Термін:</strong> ' + label + ' (' + days + ' днів)<br>' +
-      '<strong>Номер партії:</strong> ' + batchNumber + '<br>' +
-      '<strong>Кінцева дата споживання:</strong> ' + formatDate(endDate);
+      '<strong>Produkt:</strong> ' + productName + '<br>' +
+      '<strong>Startdato:</strong> ' + formatDate(startDate) + '<br>' +
+      '<strong>Holdbarhet:</strong> ' + label + ' (' + days + ' днів)<br>' +
+      '<strong>Batchnummer:</strong> ' + batchNumber + '<br>' +
+      '<strong>Siste forbruksdato:</strong> ' + formatDate(endDate);
   }
 
   document.addEventListener('DOMContentLoaded', function () {
