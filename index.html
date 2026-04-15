@@ -173,14 +173,16 @@
     document.getElementById('startDate').value = formatInputDate(today);
   }
 
-function calculateBatchNumber(date) {
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const year = String(date.getFullYear()).slice(-2);
-
-  const number = parseInt(day + month + year, 10);
-  return number * 2;
-}
+  function calculateBatchNumber() {
+    const today = new Date();
+  
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = String(today.getFullYear()).slice(-2); // тільки останні 2 цифри
+  
+    const number = parseInt(day + month + year, 10);
+    return number * 2;
+  }
 
   function updateDurationInfo() {
     const select = document.getElementById('product');
@@ -192,34 +194,20 @@ function calculateBatchNumber(date) {
       'Varighet: ' + label + ' (' + days + ' dager)';
   }
 
-function calculate() {
-  const select = document.getElementById('product');
-  const option = select.options[select.selectedIndex];
+  function calculate() {
+    const select = document.getElementById('product');
+    const option = select.options[select.selectedIndex];
 
-  const days = parseInt(option.value, 10);
-  const label = option.getAttribute('data-label');
-  const productName = option.textContent;
-  const startValue = document.getElementById('startDate').value;
-  const result = document.getElementById('result');
+    const days = parseInt(option.value, 10);
+    const label = option.getAttribute('data-label');
+    const productName = option.textContent;
+    const startValue = document.getElementById('startDate').value;
+    const result = document.getElementById('result');
 
-  if (!startValue) {
-    result.textContent = 'Velg en dato.';
-    return;
-  }
-
-  const startDate = new Date(startValue + 'T00:00:00');
-  const endDate = new Date(startDate);
-  endDate.setDate(endDate.getDate() + days);
-
-  const batchNumber = calculateBatchNumber(startDate);
-
-  result.innerHTML =
-    '<strong>Produkt:</strong> ' + productName + '<br>' +
-    '<strong>Startdato:</strong> ' + formatDate(startDate) + '<br>' +
-    '<strong>Holdbarhet:</strong> ' + label + ' (' + days + ' dager)<br>' +
-    '<strong>Batchnummer:</strong> ' + batchNumber + '<br>' +
-    '<strong>Best før:</strong> ' + formatDate(endDate);
-}
+    if (!startValue) {
+      result.textContent = 'Velg dato først.';
+      return;
+    }
 
     const startDate = new Date(startValue + 'T00:00:00');
     const endDate = new Date(startDate);
