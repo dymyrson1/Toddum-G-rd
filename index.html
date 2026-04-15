@@ -151,12 +151,13 @@
 
   function calculateBatchNumber() {
     const today = new Date();
+  
     const day = String(today.getDate()).padStart(2, '0');
     const month = String(today.getMonth() + 1).padStart(2, '0');
-    const year = String(today.getFullYear());
-
-    const numericDate = parseInt(day + month + year, 10);
-    return numericDate * 2;
+    const year = String(today.getFullYear()).slice(-2); // тільки останні 2 цифри
+  
+    const number = parseInt(day + month + year, 10);
+    return number * 2;
   }
 
   function updateDurationInfo() {
