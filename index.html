@@ -69,6 +69,8 @@
 <div class="box">
   <h2>Dato- og batchkalkulator</h2>
 
+  <div id="currentDateTime" style="margin-top:8px; color:#555;"></div>
+  
   <label for="product">Produkt:</label>
   <select id="product">
     <option value="16" data-label="2 uker og 2 dager">Burrata</option>
@@ -92,6 +94,23 @@
 </div>
 
 <script>
+  function updateDateTime() {
+    const now = new Date();
+  
+    const formatted = now.toLocaleString('no-NO', {
+      weekday: 'long',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  
+    document.getElementById('currentDateTime').textContent =
+      'Nåværende dato og tid: ' + formatted;
+  }
+  
   function formatDate(date) {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
