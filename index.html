@@ -85,7 +85,12 @@
   <label for="startDate">Startdato:</label>
   <input type="date" id="startDate">
 
-  <button type="button" id="todayBtn">I dag</button>
+  <div style="display:flex; gap:8px; margin-top:10px;">
+    <button type="button" id="prevDayBtn">←</button>
+    <button type="button" id="todayBtn">I dag</button>
+    <button type="button" id="nextDayBtn">→</button>
+  </div>
+  
   <button type="button" id="calculateBtn">Beregn</button>
 
   <div class="result" id="result">
@@ -94,6 +99,17 @@
 </div>
 
 <script>
+  function changeDay(offset) {
+    const input = document.getElementById('startDate');
+  
+    if (!input.value) return;
+  
+    const date = new Date(input.value + 'T00:00:00');
+    date.setDate(date.getDate() + offset);
+  
+    input.value = formatInputDate(date);
+  }
+  
   function updateDateTime() {
     const now = new Date();
   
@@ -108,7 +124,7 @@
     });
   
     document.getElementById('currentDateTime').textContent =
-      'Nåværende dato og tid: ' + formatted;
+      'Dato og klokkeslett: ' + formatted;
   }
   
   function formatDate(date) {
@@ -183,6 +199,14 @@
     document.getElementById('todayBtn').addEventListener('click', setToday);
     document.getElementById('calculateBtn').addEventListener('click', calculate);
     document.getElementById('product').addEventListener('change', updateDurationInfo);
+    document.getElementById('prevDayBtn').addEventListener('click', function () {
+      changeDay(-1);
+    });
+    
+    document.getElementById('nextDayBtn').addEventListener('click', function () {
+      changeDay(1);
+    });
+    
     updateDateTime();
     setInterval(updateDateTime, 1000);
 
