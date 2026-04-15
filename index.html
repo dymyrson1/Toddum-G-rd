@@ -70,6 +70,12 @@
   <h2>Dato- og batchkalkulator</h2>
 
   <div id="currentDateTime" style="margin-top:8px; color:#555;"></div>
+
+  <div style="display:flex; gap:8px; margin-top:10px;">
+    <button type="button" id="prevDayBtn">←</button>
+    <button type="button" id="todayBtn">I dag</button>
+    <button type="button" id="nextDayBtn">→</button>
+  </div>
   
   <label for="product">Produkt:</label>
   <select id="product">
@@ -85,11 +91,7 @@
   <label for="startDate">Startdato:</label>
   <input type="date" id="startDate">
 
-  <div style="display:flex; gap:8px; margin-top:10px;">
-    <button type="button" id="prevDayBtn">←</button>
-    <button type="button" id="todayBtn">I dag</button>
-    <button type="button" id="nextDayBtn">→</button>
-  </div>
+
   
   <button type="button" id="calculateBtn">Beregn</button>
 
