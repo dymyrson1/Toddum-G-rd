@@ -183,6 +183,8 @@
     document.getElementById('todayBtn').addEventListener('click', setToday);
     document.getElementById('calculateBtn').addEventListener('click', calculate);
     document.getElementById('product').addEventListener('change', updateDurationInfo);
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
 
     setToday();
     updateDurationInfo();
